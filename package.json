@@ -1,0 +1,22 @@
+{
+  "name": "av1-chan",
+  "version": "0.0.1",
+  "description": "discord bot for the r/av1 discord server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lastrosade/AV1-Chan.git"
+  },
+  "author": "Lastrosade",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/lastrosade/AV1-Chan/issues"
+  },
+  "homepage": "https://github.com/lastrosade/AV1-Chan#readme",
+  "dependencies": {
+    "discord.js": "^11.5.1"
+  }
+}
