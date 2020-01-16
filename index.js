@@ -3,10 +3,12 @@ const Discord = require('discord.js')
 const fs = require('fs')
 const https = require('https');
 const path = require('path');
+const brain = require('brain.js')
 const { exec } = require("child_process");
 
 // Create an instance of Discord that we will use to control the bot
 const bot = new Discord.Client();
+const rich = new Discord.RichEmbed();
 
 // Token for your bot, located in the Discord application console - https://discordapp.com/developers/applications/me/
 const token = fs.readFileSync('bot-token.txt',"ascii")
@@ -24,7 +26,7 @@ bot.on('ready', () => {
 bot.on('message', message => {
     // So the bot doesn't reply to iteself
     if (message.author.bot) return;
-    if (message.content === 'ping' || message.content === 'Ping') {
+    if (message.content.toLowerCase() === 'ping') {
         message.reply('Pong!');
         return;
     }
@@ -35,13 +37,25 @@ bot.on('message', message => {
     //     }
     // }
 
-    if (message.channel.name === "av1-chan_lib" || message.channel.name === "video" || message.channel.name === "files") {
+    // if (message.channel.name === "av1-chan_lib")
+    if (message.content.toLowerCase() === '!help') {
+        let msg = "I scan files.\nTo scan a file upload it with the message '!scan' or 'scan', it **has** to be a single message.";
+        message.author.send(msg);
+        return;
+    }
+
+    // if (message.content === "nice" && message.member.user.id === '132637059327328256') {
+    //     message.channel.send("Fail", { files: [path.join(__dirname, "temp", "nice.PNG")] });
+    // }
+
+    // if (message.channel.name === "av1-chan_lib" || message.channel.name === "video" || message.channel.name === "files")
+    if (message.content.toLowerCase() === '!scan' || message.content.toLowerCase() === 'scan') {
 
         message.attachments.forEach((item) => {
 
             const re = /(?:\.([^.]+))?$/;
             const ext = re.exec(item.filename)[1].toLowerCase();
-            if ( ext.match(/^(png|exe|txt|log)$/)) {
+            if ( ext.match(/^(png|exe|txt|log|7z|7zip|tar|gz|lz|bz2|xz|zip)$/)) {
                 return
             }
 
@@ -58,7 +72,7 @@ bot.on('message', message => {
                         if (error) {
                             console.error(error);
                             message.channel.send("I broke, help.");
-                            return
+                            return;
                         }
 
                         obj = JSON.parse(stdout);
@@ -128,6 +142,7 @@ bot.on('message', message => {
                 });
             });
         });
+        return;
     }
 });
 
