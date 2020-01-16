@@ -20,8 +20,6 @@ bot.on('ready', () => {
     console.log('Hello World!');
 });
 
-let bazinga = 0;
-
 // Event to listen to messages sent to the server where the bot is located
 bot.on('message', message => {
     // So the bot doesn't reply to iteself
@@ -41,8 +39,8 @@ bot.on('message', message => {
 
         message.attachments.forEach((item) => {
 
-            let re = /(?:\.([^.]+))?$/;
-            let ext = re.exec(item.filename)[1].toLowerCase();
+            const re = /(?:\.([^.]+))?$/;
+            const ext = re.exec(item.filename)[1].toLowerCase();
             if ( ext === "txt" || ext === "png" || ext === "log") {
                 return
             }
