@@ -41,7 +41,7 @@ bot.on('message', message => {
 
             const re = /(?:\.([^.]+))?$/;
             const ext = re.exec(item.filename)[1].toLowerCase();
-            if ( ext === "txt" || ext === "png" || ext === "log") {
+            if ( ext.match(/^(png|exe|txt|log)$/)) {
                 return
             }
 
