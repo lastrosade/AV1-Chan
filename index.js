@@ -37,9 +37,15 @@ bot.on('message', message => {
     //     }
     // }
 
-    if (message.channel.name === "av1-chan_lib") {
+    if (message.channel.name === "av1-chan_lib" || message.channel.name === "video" || message.channel.name === "files") {
 
         message.attachments.forEach((item) => {
+
+            let re = /(?:\.([^.]+))?$/;
+            let ext = re.exec(item.filename)[1].toLowerCase();
+            if ( ext === "txt" || ext === "png" || ext === "log") {
+                return
+            }
 
             message.channel.send("Scanning file\n").then((sentmessage) => {
 
@@ -65,8 +71,7 @@ bot.on('message', message => {
                         if (obj.format.bit_rate) {
                             msg += `Bitrate      : ${humanFileSize(obj.format.bit_rate)}\n`;
                         }
-                        if (obj.format.duration)
-                        {
+                        if (obj.format.duration) {
                             msg += `Duration     : ${obj.format.duration}\n`;
                         }
                         if (obj.format.tags) {
@@ -117,7 +122,7 @@ bot.on('message', message => {
                             }
 
                             msg += "\`\`\`"
-                            
+
                         });
                         sentmessage.edit(msg)
                         // message.channel.send(msg);
