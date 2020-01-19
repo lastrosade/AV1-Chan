@@ -19,6 +19,8 @@ const humanFileSize = (size) => {
     return size;
 }
 
+const helpmsg = "I scan files.\nTo scan a file: upload it with the message '!scan' or 'scan', it **has** to be a single message.\nI only scan \`webm, ivf, webp, jpg, jpeg, png, webm, bmp, mkv, mka, ogv, oga, ogg, opus, mp4, ts, m2ts, mts, flac, c2, wav, mp3\`\nPlease do not use me for spam (ie don't scan memes and trash), Be respectful, Thanks.";
+
 // Gets called when our bot is successfully logged in and connected
 bot.on('ready', () => {
     console.log('Hello World!');
@@ -41,9 +43,12 @@ bot.on('message', message => {
 
     // if (message.channel.name === "av1-chan_lib")
     if (message.content.toLowerCase() === '!help') {
-        let msg = "I scan files.\nTo scan a file: upload it with the message '!scan' or 'scan', it **has** to be a single message.\nI only scan \`webm, ivf, webp, jpg, jpeg, png, webm, bmp, mkv, mka, ogv, oga, ogg, opus, mp4, ts, m2ts, mts, flac, c2, wav, mp3\`\nPlease do not use me for spam (ie don't scan memes and trash), Be respectful, Thanks.";
-        message.author.send(msg);
+        message.author.send(helpmsg);
         return;
+    }
+
+    if (message.isMentioned(bot.user)) {
+        message.channel.send("nice");
     }
 
     // if (message.content === "nice" && message.member.user.id === '132637059327328256') {
@@ -52,6 +57,12 @@ bot.on('message', message => {
 
     // if (message.channel.name === "av1-chan_lib" , | message.channel.name === "video" || message.channel.name === "files")
     if (message.content.toLowerCase() === '!scan' || message.content.toLowerCase() === 'scan') {
+
+        if (message.attachments === undefined || message.attachments.size == 0) {
+            message.author.send(helpmsg);
+            message.delete();
+            return;
+        }
 
         message.attachments.forEach((item) => {
 
@@ -143,8 +154,7 @@ bot.on('message', message => {
                 });
             } else {
                 // message.delete();
-                let msg = "I scan files.\nTo scan a file: upload it with the message '!scan' or 'scan', it **has** to be a single message.\nI only scan \`webm, ivf, webp, jpg, jpeg, png, webm, bmp, mkv, mka, ogv, oga, ogg, opus, mp4, ts, m2ts, mts, flac, c2, wav, mp3\`\nPlease do not use me for spam (ie don't scan memes and trash), Be respectful, Thanks.";
-                message.author.send(msg);
+                message.author.send(helpmsg);
                 return;
             }
 
