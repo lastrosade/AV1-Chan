@@ -1,8 +1,8 @@
 'use strict'
 
 // Import the discord.js module
-const Discord = require('discord.js')
-const fs = require('fs')
+const Discord = require('discord.js');
+const fs = require('fs');
 const https = require('https');
 const path = require('path');
 const brain = require('brain.js');
@@ -19,7 +19,7 @@ const humanFileSize = (size) => {
     return size;
 }
 
-const helpmsg = "I scan files.\nTo scan a file: upload it with the message '!scan' or 'scan', it **has** to be a single message.\nI only scan \`webm, ivf, webp, jpg, jpeg, png, webm, bmp, mkv, mka, ogv, oga, ogg, opus, mp4, ts, m2ts, mts, flac, c2, wav, mp3\`\nPlease do not use me for spam (ie don't scan memes and trash), Be respectful, Thanks.";
+const helpmsg = "I scan files.\nTo scan a file: upload it with the message '!scan' or 'scan', it **has** to be a single message.\nI only scan \`webm, ivf, webp, jpg, jpeg, png, webm, bmp, mkv, mka, ogv, oga, ogg, opus, mp4, m4a, m4b, ts, m2ts, mts, flac, c2, wav, mp3, mp2\`\nPlease do not use me for spam (ie don't scan memes and trash), Be respectful, Thanks.";
 
 // Gets called when our bot is successfully logged in and connected
 bot.on('ready', () => {
@@ -48,7 +48,26 @@ bot.on('message', message => {
     }
 
     if (message.isMentioned(bot.user)) {
-        message.channel.send("nice");
+        message.channel.send(['As I see it, yes.',
+            'Ask again later.',
+            'Better not tell you now.',
+            'Cannot predict now.',
+            'Concentrate and ask again.',
+            'Don’t count on it.',
+            'It is certain.',
+            'It is decidedly so.',
+            'Most likely.',
+            'My reply is no.',
+            'My sources say no.',
+            'Outlook not so good.',
+            'Outlook good.',
+            'Reply hazy, try again.',
+            'Signs point to yes.',
+            'Very doubtful.',
+            'Without a doubt.',
+            'Yes.',
+            'Yes – definitely.',
+            'You may rely on it.'][Math.floor(Math.random() * 20)+1]);
     }
 
     // if (message.content === "nice" && message.member.user.id === '132637059327328256') {
@@ -68,7 +87,7 @@ bot.on('message', message => {
 
             const re = /(?:\.([^.]+))?$/;
             const ext = re.exec(item.filename)[1].toLowerCase();
-            if (ext.match(/^(webm|ivf|webp|jpg|jpeg|png|webm|bmp|mkv|mka|ogv|oga|ogg|opus|mp4|ts|m2ts|mts|vob|flac|c2|wav|mp3)$/)) { 
+            if (ext.match(/^(webm|ivf|webp|jpg|jpeg|png|webm|bmp|mkv|mka|ogv|oga|ogg|opus|mp4|m4a|m4b|ts|m2ts|mts|vob|flac|c2|wav|mp3|mp2)$/)) {
                 message.channel.send("Scanning file\n").then((sentmessage) => {
 
                     const filepath = path.join(__dirname, "temp", item.filename);
@@ -108,7 +127,7 @@ bot.on('message', message => {
 
                                 msg += `\`\`\`\n+ Stream ${value.index}   : ${value.codec_type}\n`;
 
-                                if (value.codec_name === "h264" || value.codec_name === "h265") {
+                                if (value.codec_name === "h264" || value.codec_name === "h265" || value.codec_name === "aac" || value.codec_name === "mp2" || value.codec_name === "mp3" || value.codec_name === "mpeg2video") {
                                     msg += `| Codec      : Filthy ${value.codec_name}\n`;
                                 } else {
                                     msg += `| Codec      : ${value.codec_name}\n`;
@@ -137,6 +156,12 @@ bot.on('message', message => {
                                 } else if (value.codec_type === "audio") {
                                     if (value.channels) {
                                         msg += `| channels   : ${value.channels}\n`;
+                                    }
+                                    if (value.sample_fmt) {
+                                        msg += `| sample fmt : ${value.sample_fmt}\n`;
+                                    }
+                                    if (value.sample_rate) {
+                                        msg += `| sample rate: ${value.sample_rate}\n`;
                                     }
 
                                 } else if (value.codec_type === "subtitles") {
