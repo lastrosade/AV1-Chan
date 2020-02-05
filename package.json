@@ -19,6 +19,7 @@
   "dependencies": {
     "brain.js": "^2.0.0-alpha.11",
     "discord.js": "^11.5.1",
+    "moment": "^2.24.0",
     "sodium": "^3.0.2",
     "uws": "^100.0.1"
   }
