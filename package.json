@@ -1,6 +1,6 @@
 {
   "name": "av1-chan",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "discord bot for the r/av1 discord server",
   "main": "index.js",
   "scripts": {
@@ -17,10 +17,12 @@
   },
   "homepage": "https://github.com/lastrosade/AV1-Chan#readme",
   "dependencies": {
-    "brain.js": "^2.0.0-alpha.11",
+    "bufferutil": "^4.0.1",
     "discord.js": "^11.5.1",
+    "erlpack": "github:discordapp/erlpack",
     "moment": "^2.24.0",
+    "node-opus": "^0.3.3",
     "sodium": "^3.0.2",
-    "uws": "^100.0.1"
+    "utf-8-validate": "^5.0.2"
   }
 }

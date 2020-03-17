@@ -5,13 +5,13 @@ const Discord = require('discord.js');
 const fs = require('fs');
 const https = require('https');
 const path = require('path');
-const brain = require('brain.js');
+// const brain = require('brain.js');
 const { exec } = require("child_process");
 const moment = require('moment');
 
 // Create an instance of Discord that we will use to control the bot
 const bot = new Discord.Client();
-const rich = new Discord.RichEmbed();
+// const rich = new Discord.RichEmbed();
 
 process.env.TZ = 'Europe/London'
 
@@ -22,15 +22,24 @@ const humanFileSize = (size) => {
     return size;
 }
 
-const helpmsg = "I scan files.\nTo scan a file: upload it with the message '!scan' or 'scan', it **has** to be a single message.\nI only scan \`webm, ivf, webp, jpg, jpeg, png, webm, bmp, mkv, mka, ogv, oga, ogg, opus, mp4, m4a, m4b, ts, m2ts, mts, flac, c2, wav, mp3, mp2\`\nPlease do not use me for spam (ie don't scan memes and trash), Be respectful, Thanks.";
+const helpmsg = "I scan files.\nTo scan a file: upload it with the message '!scan' or 'scan', it **has** to be a single message.\nI only scan \`mkv, mka, mks, mk3d, webm, ogv, oga, ogg, opus, ivf, h261, h263, 264, h264, 265, h265, hevc, vc1, vc2, y4m, dv, dif, avi, ffm, mov, flv, f4v, swf, flac, alac, nut, asf, ac3, eac3, a52, spdif, rm, aac, hds, ismv, isma, latm, sap, wv, tta, ape, wav, aiff, truehd, smjpeg, sox, adx, daud, au, dts, ast, caf, gxf, ircam, mmf, mxf, alaw, mulaw, roq, thd, voc, w64, adts, amr, ilbc, c2, bit, speex, spx, aptx, aptxhd, sbc, msbc, mpeg, mp2, m2t, m2ts, mts, ts, hls, mpegts, mp3, mp4, m4v, m4a, m4b, mpd, avm2, dvd, vob, vcd, svcd, ipod, psp, 3g2, 3gp, webp, jpg, jpeg, mjpg, mjpeg, png, apng, jp2, j2k, jpf, jpx, jpm, mj2, pbm, pgm, ppm, bmp, gif\`\nPlease do not use me for spam (ie don't scan memes and trash), Be respectful, Thanks.";
 
 // Gets called when our bot is successfully logged in and connected
 bot.on('ready', () => {
     console.log('Hello World!');
+    bot.user.setActivity(`since ${moment().format("DD-MM-YY HH:mm")}`);
+
+    // let vc = bot.channels.get('587033245070262279').join().then(connection => {
+    //         const dispatcher = connection.playFile(path.join(__dirname, "audio", "RELENTLESS DOPPELGANGER_1.opus"), {volume: 0.15, bitrate: 48000});
+    //     }).catch(err => console.log(err));
+
+    // vc.join();
+    // vc.leave();
 });
 
 // Event to listen to messages sent to the server where the bot is located
 bot.on('message', message => {
+
     // So the bot doesn't reply to iteself
     if (message.author.bot) return;
     if (message.content.toLowerCase() === 'ping') {
@@ -38,17 +47,21 @@ bot.on('message', message => {
         return;
     }
 
-    // if (message.channel.name === "off-topic") {
-    //     if (message.member.user.id === "134113602494791680" || message.member.user.id === "551696650826153995" || message.member.user.id === "176413727401312257") {
-    //         message.react("👍")
-    //     }
-    // }
-
     // if (message.channel.name === "av1-chan_lib")
     if (message.content.toLowerCase() === '!help') {
         message.author.send(helpmsg);
         return;
     }
+
+    // if (message.content.toLowerCase() === '!g') {
+    //     // var guilds = bot.guilds;
+    //     // console.log(guilds);
+    //     const roleID = "617826204224847872";
+    //     let membersWithRole = message.guild.roles.get(roleID).members;
+    //     console.log(membersWithRole);
+    //     message.channel.send("```"+JSON.stringify(membersWithRole )+"```");
+    //     return;
+    // }
 
     if (message.isMentioned(bot.user)) {
         message.channel.send(['As I see it, yes.',
@@ -71,19 +84,15 @@ bot.on('message', message => {
             'Yes.',
             'Yes – definitely.',
             'You may rely on it.'][Math.floor(Math.random() * 20)+1]);
+        return;
     }
-
-    // if (message.content === "nice" && message.member.user.id === '132637059327328256') {
-    //     message.channel.send("Fail", { files: [path.join(__dirname, "temp", "nice.PNG")] });
-    // }
 
     if (message.content.toLowerCase() === '!time') {
         let now = moment();
         message.channel.send(`UTC Time is ${moment().format("HH:mm")}`);
-        // message.channel.send("Wowwwww, you meow like a cat! That means you are one, right? Shut the fuck up. If you really want to be put on a leash and treated like a domestic animal then that’s called a fetish, not “quirky” or “cute”. What part of you seriously thinks that any part of acting like a feline establishes a reputation of appreciation? Is it your lack of any defining aspect of personality that urges you to resort to shitty representations of cats to create an illusion of meaning in your worthless life? Wearing “cat ears” in the shape of headbands further notes the complete absence of human attribution to your false sense of personality, such as intelligence or charisma in any form or shape. Where do you think this mindset’s gonna lead you? You think you’re funny, random, quirky even? What makes you think that acting like a fucking cat will make a goddamn hyena laugh? I, personally, feel extremely sympathetic towards you as your only escape from the worthless thing you call your existence is to pretend to be an animal. But it’s not a worthy choice to assert this horrifying fact as a dominant trait, mainly because personality traits require an initial personality to lay their foundation on. You’re not worthy of anybody’s time, so go fuck off, “cat-girl”.");
+        return;
     }
 
-    // if (message.channel.name === "av1-chan_lib" , | message.channel.name === "video" || message.channel.name === "files")
     if (message.content.toLowerCase() === '!scan' || message.content.toLowerCase() === 'scan') {
 
         if (message.attachments === undefined || message.attachments.size == 0) {
@@ -96,7 +105,7 @@ bot.on('message', message => {
 
             const re = /(?:\.([^.]+))?$/;
             const ext = re.exec(item.filename)[1].toLowerCase();
-            if (ext.match(/^(webm|ivf|webp|jpg|jpeg|png|webm|bmp|mkv|mka|ogv|oga|ogg|opus|mp4|m4a|m4b|ts|m2ts|mts|vob|flac|c2|wav|mp3|mp2)$/)) {
+            if (ext.match(/^(mkv|mka|mks|mk3d|webm|ogv|oga|ogg|opus|ivf|h261|h263|264|h264|265|h265|hevc|vc1|vc2|y4m|dv|dif|avi|ffm|mov|flv|f4v|swf|flac|alac|nut|asf|ac3|eac3|a52|spdif|rm|aac|hds|ismv|isma|latm|sap|wv|tta|ape|wav|aiff|truehd|smjpeg|sox|adx|daud|au|dts|ast|caf|gxf|ircam|mmf|mxf|alaw|mulaw|roq|thd|voc|w64|adts|amr|ilbc|c2|bit|speex|spx|aptx|aptxhd|sbc|msbc|mpeg|mp2|m2t|m2ts|mts|ts|hls|mpegts|mp3|mp4|m4v|m4a|m4b|mpd|avm2|dvd|vob|vcd|svcd|ipod|psp|3g2|3gp|webp|jpg|jpeg|mjpg|mjpeg|png|apng|jp2|j2k|jpf|jpx|jpm|mj2|pbm|pgm|ppm|bmp|gif)$/)) {
                 message.channel.send("Scanning file\n").then((sentmessage) => {
 
                     const filepath = path.join(__dirname, "temp", item.filename);
@@ -138,6 +147,8 @@ bot.on('message', message => {
 
                                 if (value.codec_name === "h264" || value.codec_name === "h265" || value.codec_name === "aac" || value.codec_name === "mp2" || value.codec_name === "mp3" || value.codec_name === "mpeg2video") {
                                     msg += `| Codec      : Filthy ${value.codec_name}\n`;
+                                } else if (value.codec_name === "ac3" || value.codec_name === "eac3") {
+                                    msg += `| Codec      : Dirty  ${value.codec_name}\n`;
                                 } else {
                                     msg += `| Codec      : ${value.codec_name}\n`;
                                 }
