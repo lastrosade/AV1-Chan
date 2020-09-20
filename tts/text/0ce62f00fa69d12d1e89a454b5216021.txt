@@ -1,0 +1,1 @@
+I scan files.\nTo scan a file: upload it with the message '!scan' or 'scan', it **has** to be a single message.

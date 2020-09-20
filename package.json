@@ -16,12 +16,19 @@
     "url": "https://github.com/lastrosade/AV1-Chan/issues"
   },
   "homepage": "https://github.com/lastrosade/AV1-Chan#readme",
+  "nodemonConfig": {
+    "verbose": true,
+    "ignore": ["DB.json", "*.test.js", "fixtures/*"]
+  },
   "dependencies": {
     "bufferutil": "^4.0.1",
-    "discord.js": "^11.5.1",
+    "discord.js": "^12.2.0",
     "erlpack": "github:discordapp/erlpack",
-    "moment": "^2.24.0",
+    "homoglyph-search": "^1.2.0",
+    "moment": "^2.25.3",
+    "node-json-db": "^1.1.0",
     "node-opus": "^0.3.3",
+    "sleep": "^6.1.0",
     "sodium": "^3.0.2",
     "utf-8-validate": "^5.0.2"
   }
