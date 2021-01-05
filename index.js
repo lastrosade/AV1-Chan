@@ -172,13 +172,14 @@ bot.on('message', message => {
 
     const msg_fmt_1 = msg_lower.replace(/\s/g, '').replace(/\<[^\>]*>/g, "");
     if (homoglyphSearch.search(msg_fmt_1, ["hentai"]).length > 0 ||
-        homoglyphSearch.search(msg_fmt_1, ["hentie"]).length > 0) {
+        homoglyphSearch.search(msg_fmt_1, ["hentie"]).length > 0 ||
+        homoglyphSearch.search(msg_fmt_1, ["hen tie"]).length > 0) {
         let hentai = db.getData("/counters/hentai_counter")+1;
         db.push("/counters/hentai_counter", hentai); 
         db_change = true;
         message.channel.send('<@551696650826153995>, '+hentai);
     }
-    
+
     if (homoglyphSearch.search(msg_fmt_1, ["jeremylee.sh"]).length > 0) {
         let jeremyleesh = db.getData("/counters/jeremyleesh_counter")+1; 
         db.push("/counters/jeremyleesh_counter", jeremyleesh); 
@@ -192,11 +193,19 @@ bot.on('message', message => {
         // message.channel.send('<@258670228819410944>, '+av1an);
     }
 
+    if (homoglyphSearch.search(msg_fmt_1, ["hav1t"]).length > 0) {
+        let hav1t = db.getData("/counters/hav1t_counter")+1; 
+        db.push("/counters/hav1t_counter", hav1t); 
+        db_change = true;
+    }
+
     if (homoglyphSearch.search(msg_fmt_1, ["h265"]).length > 0 ||
         homoglyphSearch.search(msg_fmt_1, ["h264"]).length > 0 ||
         homoglyphSearch.search(msg_fmt_1, ["aac"]).length > 0 ||
         homoglyphSearch.search(msg_fmt_1, ["divx"]).length > 0 ||
-        homoglyphSearch.search(msg_fmt_1, ["mp3"]).length > 0) {
+        homoglyphSearch.search(msg_fmt_1, ["mp3"]).length > 0 ||
+        homoglyphSearch.search(msg_fmt_1, ["794229496173166603"]).length > 0 ||
+        homoglyphSearch.search(msg_fmt_1, ["794229834758488104"]).length > 0) {
         if (Math.random() * 100 > 85 ) {
             message.channel.send('Cursed');
         }
