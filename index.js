@@ -26,7 +26,7 @@ const bot = new discord.Client();
 // Token for your bot, located in the discord application console - https://discordapp.com/developers/applications/me/
 const token = fs.readFileSync("bot-token.txt", "ascii");
 
-const roll_regex = /^(\d+)d(\d+)/g;
+const roll_regex = /^(\d+)d(\d+)/;
 
 // Gets called when our bot is successfully logged in and connected
 // bot.on("ready", () => {
@@ -43,6 +43,8 @@ bot.on("message", message => {
 
 	// So the bot doesn"t reply to iteself
 	if (message.author.bot) return;
+
+
 	if (message.content.toLowerCase() === "ping") {
 		message.reply("Pong! "+bot.ping+"ms");
 		return;
