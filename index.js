@@ -51,10 +51,8 @@ bot.on("message", message => {
 	}
 
 	const msg_lower = message.content.toLowerCase();
-	console.log(msg_lower);
 
 	const roll = roll_regex.exec(msg_lower);
-	console.log(roll);
 	if (roll) {
 		// console.log(roll);
 		if (roll[1] === "1") {
