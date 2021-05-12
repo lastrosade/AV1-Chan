@@ -2,11 +2,6 @@
 
 // Import the discord.js module
 const fs = require("fs");
-// const https = require("https");
-// const path = require("path");
-// const sleep = require("sleep");
-// const brain = require("brain.js");
-// const { exec } = require("child_process");
 
 // DB
 let JsonDB = require("node-json-db").JsonDB;
@@ -15,8 +10,6 @@ var db = new JsonDB(new Config("DB", false, false, "/"));
 let db_change = false;
 
 let homoglyphSearch = require("homoglyph-search");
-
-// const crypto = require("crypto");
 
 // Create an instance of discord that we will use to control the bot
 const discord = require("discord.js");
@@ -29,9 +22,9 @@ const token = fs.readFileSync("bot-token.txt", "ascii");
 const roll_regex = /^(\d+)d(\d+)/;
 
 // Gets called when our bot is successfully logged in and connected
-// bot.on("ready", () => {
-//   console.log("Hello World!");
-// });
+bot.on("ready", () => {
+	console.log("Running");
+});
 
 // Event to listen to messages sent to the server where the bot is located
 bot.on("message", message => {
@@ -54,10 +47,10 @@ bot.on("message", message => {
 
 	const roll = roll_regex.exec(msg_lower);
 	if (roll) {
-		// console.log(roll);
-		if (roll[1] === "1") {
+		if (roll[1] === "1" && roll[2] > 1 && roll[2] < 1001) {
 			message.channel.send("rolled: "+Math.floor(1+Math.random() * roll[2]));
-		} else if (roll[1] > 0 && roll[1] < 1000 && roll[2] < 1000001) {
+		} else if (roll[1] > 0 && roll[1] < 101 && roll[2] > 1 && roll[2] < 1001) {
+			console.log(roll);
 			let res = "";
 			let total = 0;
 			let dice = 0;
@@ -69,6 +62,8 @@ bot.on("message", message => {
 			}
 			res = res+"\ntotaling: "+total;
 			message.channel.send(res);
+		} else {
+			message.channel.send("Valid rolls 1-100 dices, 2-1000 faces");
 		}
 	}
 
@@ -99,7 +94,6 @@ bot.on("message", message => {
 		// 321486891079696385 blue
 	}
 
-
 	// if you read this and discover the counters, please don't spam them,
 	//  they are there for stats
 
@@ -113,7 +107,6 @@ bot.on("message", message => {
 		let av1an = db.getData("/counters/av1an_counter")+1; 
 		db.push("/counters/av1an_counter", av1an); 
 		db_change = true;
-		// message.channel.send("<@258670228819410944>, "+av1an);
 	}
 
 	if (homoglyphSearch.search(msg_fmt_1, ["hav1t"]).length > 0) {
@@ -122,7 +115,14 @@ bot.on("message", message => {
 		db_change = true;
 	}
 
-	if (homoglyphSearch.search(msg_fmt_1, ["h265"]).length > 0 ||
+	if (homoglyphSearch.search(msg_fmt_1, ["nvidia"]).length > 0) {
+		let rand = Math.floor(Math.random() * 100);
+		if (rand >= 80 && rand <= 88) {
+			message.channel.send("novideo");
+		} else if (rand >= 90 && rand <= 94) {
+			message.channel.send("Cursed");
+		}
+	} else if (homoglyphSearch.search(msg_fmt_1, ["h265"]).length > 0 ||
 		homoglyphSearch.search(msg_fmt_1, ["h264"]).length > 0 ||
 		homoglyphSearch.search(msg_fmt_1, ["aac"]).length > 0 ||
 		homoglyphSearch.search(msg_fmt_1, ["divx"]).length > 0 ||
