@@ -74,19 +74,32 @@ bot.on("message", message => {
 		let hentai = db.getData("/counters/hentai_counter")+1;
 		db.push("/counters/hentai_counter", hentai); 
 		db_change = true;
-		let rand = Math.floor(Math.random() * 100);
-		if (rand >= 80 && rand <= 88) { //Lalena
-			message.channel.send("<@510226090376298516>, "+hentai);
-		} else if (rand == 89) { //Tim
-			message.channel.send("<@280389433176621058>, "+hentai);
-		} else if (rand == 90) { //Troc
-			message.channel.send("<@720988177648713819>, "+hentai);
-		} else if (rand == 91) { //Blue
-			message.channel.send("<@321486891079696385>, "+hentai);
+		if (hentai % 500 === 0) {
+			message.channel.send(hentai+" 🎉 <@510226090376298516> <@280389433176621058> <@720988177648713819> <@321486891079696385> <@353367770030931970> 🎉");
 		} else {
-			message.channel.send(hentai);
+			let addtext = "";
+			if (hentai % 100 === 0) {
+				addtext = "🎉 ";
+			} else if (hentai === 1337) {
+				addtext = "leet bruh";
+			}
+			let rand = Math.floor(Math.random() * 100);
+			if (rand >= 80 && rand <= 88) { //Lalena
+				message.channel.send("<@510226090376298516>, "+addtext+hentai);
+			} else if (rand == 89) { //Tim
+				message.channel.send("<@280389433176621058>, "+addtext+hentai);
+			} else if (rand == 90) { //Troc
+				message.channel.send("<@720988177648713819>, "+addtext+hentai);
+			} else if (rand == 91) { //Blue
+				message.channel.send("<@321486891079696385>, "+addtext+hentai);
+			} else if (rand == 92) { // Jake000
+				message.channel.send("<@353367770030931970>, "+addtext+hentai);
+			} else {
+				message.channel.send(addtext+" "+hentai);
+			}
 		}
 
+		// 230732686145093632 Montec
 		// 280389433176621058 Tim
 		// 720988177648713819 Troc
 		// 510226090376298516 lalena
@@ -122,11 +135,7 @@ bot.on("message", message => {
 		} else if (rand >= 90 && rand <= 94) {
 			message.channel.send("Cursed");
 		}
-	} else if (homoglyphSearch.search(msg_fmt_1, ["h265"]).length > 0 ||
-		homoglyphSearch.search(msg_fmt_1, ["h264"]).length > 0 ||
-		homoglyphSearch.search(msg_fmt_1, ["aac"]).length > 0 ||
-		homoglyphSearch.search(msg_fmt_1, ["divx"]).length > 0 ||
-		homoglyphSearch.search(msg_fmt_1, ["mp3"]).length > 0) {
+	} else if (homoglyphSearch.search(msg_fmt_1, ["h265", "h264", "aac", "divx", "mp3", "mpeg"]).length > 0) {
 		if (Math.random() * 100 > 85 ) {
 			message.channel.send("Cursed");
 		}
@@ -134,15 +143,25 @@ bot.on("message", message => {
 		if (Math.floor(Math.random() * 100) > 86 ) {
 			message.channel.send(":b:opus");
 		}
+	} else if (homoglyphSearch.search(msg_fmt_1, ["jpegxl"]).length > 0) {
+		if (Math.floor(Math.random() * 100) > 95 ) {
+			message.channel.send("j:b:egxl");
+		}
+	} else if (homoglyphSearch.search(msg_fmt_1, ["vp9"]).length > 0) {
+		if (Math.floor(Math.random() * 300) == 100 ) {
+			message.channel.send("vp⑨");
+		}
 	}
 
-	if (message.content.includes("😑")) {
-		message.channel.send("Cursed");
-		let cursed_expressionless = db.getData("/counters/cursed_expressionless")+1; 
-		db.push("/counters/cursed_expressionless", cursed_expressionless); 
-		db_change = true;
-	}
 	// 😑
+	if (message.content.includes("😑")) {
+		if (Math.floor(Math.random() * 100) > 86 ) {
+			message.channel.send("Cursed");
+			let cursed_expressionless = db.getData("/counters/cursed_expressionless")+1; 
+			db.push("/counters/cursed_expressionless", cursed_expressionless); 
+			db_change = true;
+		}
+	}
 
 	if (homoglyphSearch.search(msg_fmt_1, ["food"]).length > 0 && message.author.id == "132637059327328256") {
 		message.channel.send("Yes");
