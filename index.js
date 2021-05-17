@@ -21,6 +21,10 @@ const token = fs.readFileSync("bot-token.txt", "ascii");
 
 const roll_regex = /^(\d+)d(\d+)/;
 
+const myrand = (max, offset=0) => {
+	return Math.floor(offset+Math.random()*max);
+};
+
 // Gets called when our bot is successfully logged in and connected
 bot.on("ready", () => {
 	console.log("Running");
@@ -64,7 +68,7 @@ bot.on("message", message => {
 	const roll = roll_regex.exec(msg_lower);
 	if (roll) {
 		if (roll[1] === "1" && roll[2] > 1 && roll[2] < 1001) {
-			message.channel.send("rolled: "+Math.floor(1+Math.random() * roll[2]));
+			message.channel.send("rolled: "+myrand(1, 1) * roll[2]);
 		} else if (roll[1] > 0 && roll[1] < 101 && roll[2] > 1 && roll[2] < 1001) {
 			console.log(roll);
 			let res = "";
@@ -72,7 +76,7 @@ bot.on("message", message => {
 			let dice = 0;
 			res = "rolled: ";
 			for (let i = 0; i < roll[1]; i++) {
-				dice = Math.floor(1+Math.random() * roll[2]);
+				dice = myrand(1, 1) * roll[2];
 				res = res+dice+" ";
 				total += dice;
 			}
@@ -84,9 +88,8 @@ bot.on("message", message => {
 	}
 
 	const msg_fmt_1 = msg_lower.replace(/\s/g, ).replace(/<[^>]*>/g, );
-	if (homoglyphSearch.search(msg_fmt_1, ["hentai"]).length > 0 ||
-		homoglyphSearch.search(msg_fmt_1, ["hentie"]).length > 0 ||
-		homoglyphSearch.search(msg_fmt_1, ["hen tie"]).length > 0) {
+	if (homoglyphSearch.search(msg_fmt_1, ["hentai", "hentie"]).length > 0 ||
+		homoglyphSearch.search(msg_lower, ["hen tie"]).length > 0) {
 		let hentai = db.getData("/counters/hentai_counter")+1;
 		db.push("/counters/hentai_counter", hentai); 
 		db_change = true;
@@ -99,7 +102,7 @@ bot.on("message", message => {
 			} else if (hentai === 1337) {
 				addtext = "leet bruh";
 			}
-			let rand = Math.floor(Math.random() * 100);
+			let rand = myrand(100);
 			if (rand >= 80 && rand <= 88) { //Lalena
 				message.channel.send("<@510226090376298516>, "+addtext+hentai);
 			} else if (rand == 89) { //Tim
@@ -143,35 +146,52 @@ bot.on("message", message => {
 		db.push("/counters/hav1t_counter", hav1t); 
 		db_change = true;
 	}
+	
+	if (homoglyphSearch.search(msg_lower, ["mod abuse"]).length > 0) {
+		let rand = myrand(100);
+		if (rand >= 80 && rand <= 99) {
+
+			let str  = myrand(2, 1) == 1 ? "l" : "L";
+			str += myrand(2, 1) == 1 ? "i" : "I";
+			str += myrand(2, 1) == 1 ? "t" : "T";
+			str += myrand(2, 1) == 1 ? "e" : "E";
+			str += myrand(2, 1) == 1 ? "r" : "R";
+			str += myrand(2, 1) == 1 ? "a" : "A";
+			str += myrand(2, 1) == 1 ? "l" : "L";
+			str += myrand(2, 1) == 1 ? "l" : "L";
+			str += myrand(2, 1) == 1 ? "y" : "Y";
+			message.channel.send(str+" 1984");
+		}
+	}
 
 	if (homoglyphSearch.search(msg_fmt_1, ["nvidia"]).length > 0) {
-		let rand = Math.floor(Math.random() * 100);
+		let rand = myrand(100);
 		if (rand >= 80 && rand <= 88) {
 			message.channel.send("novideo");
 		} else if (rand >= 90 && rand <= 94) {
 			message.channel.send("Cursed");
 		}
 	} else if (homoglyphSearch.search(msg_fmt_1, ["h265", "h264", "aac", "divx", "mp3", "mpeg"]).length > 0) {
-		if (Math.random() * 100 > 85 ) {
+		if (myrand(100) > 85 ) {
 			message.channel.send("Cursed");
 		}
 	} else if (homoglyphSearch.search(msg_fmt_1, ["opus"]).length > 0) {
-		if (Math.floor(Math.random() * 100) > 86 ) {
+		if (myrand(100) > 86 ) {
 			message.channel.send(":b:opus");
 		}
 	} else if (homoglyphSearch.search(msg_fmt_1, ["jpegxl"]).length > 0) {
-		if (Math.floor(Math.random() * 100) > 95 ) {
+		if (myrand(100) > 95 ) {
 			message.channel.send("j:b:egxl");
 		}
 	} else if (homoglyphSearch.search(msg_fmt_1, ["vp9"]).length > 0) {
-		if (Math.floor(Math.random() * 300) == 100 ) {
+		if (myrand(300) == 100 ) {
 			message.channel.send("vp⑨");
 		}
 	}
 
 	// 😑
 	if (message.content.includes("😑")) {
-		if (Math.floor(Math.random() * 100) > 86 ) {
+		if (myrand(100) > 86 ) {
 			message.channel.send("Cursed");
 			let cursed_expressionless = db.getData("/counters/cursed_expressionless")+1; 
 			db.push("/counters/cursed_expressionless", cursed_expressionless); 
