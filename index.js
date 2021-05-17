@@ -26,6 +26,22 @@ bot.on("ready", () => {
 	console.log("Running");
 });
 
+bot.on("guildBanAdd", member => {
+	member.guild.channels.get("615105639567589376").send("${user.username} got funnied by a mod with a ban hammer");
+	// 615105639567589376 #off-topic
+});
+
+// bot.on("guildMemberAdd", member => {
+// 	console.log(member);
+// 	member.guild.channels.get("615105639567589376").send("Welcome <@${member.id}>\nIf you need help on AV1 video compression, or even various types of other video codecs, you can go in <#587033245061873759>	and ask help from our lovely expert encoding members. If you need help or suggestions in image compression, you can go in #image. For anything related to audio, you can go in <#662412664252923924> obviously. For anything related to hardware/hardware design, scientific knowledge and technology, you can find us in <#719811866959806514>.\nIf you're a software developer or interested in software development in general, there is the <#686197510733299755> category.");
+
+// 	// 615105639567589376 #off-topic
+// 	// 587033245061873759 #video
+// 	// 662412664252923924 #audio
+// 	// 719811866959806514 #hardware
+// 	// 686197510733299755 #developpement
+// });
+
 // Event to listen to messages sent to the server where the bot is located
 bot.on("message", message => {
 
