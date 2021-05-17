@@ -68,7 +68,7 @@ bot.on("message", message => {
 	const roll = roll_regex.exec(msg_lower);
 	if (roll) {
 		if (roll[1] === "1" && roll[2] > 1 && roll[2] < 1001) {
-			message.channel.send("rolled: "+myrand(1, 1) * roll[2]);
+			message.channel.send("rolled: "+myrand(roll[2], 1));
 		} else if (roll[1] > 0 && roll[1] < 101 && roll[2] > 1 && roll[2] < 1001) {
 			console.log(roll);
 			let res = "";
@@ -76,7 +76,7 @@ bot.on("message", message => {
 			let dice = 0;
 			res = "rolled: ";
 			for (let i = 0; i < roll[1]; i++) {
-				dice = myrand(1, 1) * roll[2];
+				dice = myrand(roll[2], 1);
 				res = res+dice+" ";
 				total += dice;
 			}
