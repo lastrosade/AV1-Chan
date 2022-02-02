@@ -128,8 +128,6 @@ bot.on("message", message => {
 				message.channel.send("<@720988177648713819>, "+addtext+hentai).catch((err) => {console.log("Error", err);});
 			} else if (rand == 91) { //Blue
 				message.channel.send("<@321486891079696385>, "+addtext+hentai).catch((err) => {console.log("Error", err);});
-			} else if (rand == 92) { // Jake000
-				message.channel.send("<@353367770030931970>, "+addtext+hentai).catch((err) => {console.log("Error", err);});
 			} else {
 				message.channel.send(addtext+" "+hentai).catch((err) => {console.log("Error", err);});
 			}
