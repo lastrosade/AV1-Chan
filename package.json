@@ -29,7 +29,7 @@
     "discord.js": "^12.2.0",
     "erlpack": "github:discordapp/erlpack",
     "homoglyph-search": "^1.2.0",
-    "moment": "^2.25.3",
+    "moment": "^2.29.2",
     "node-json-db": "^1.1.0",
     "node-opus": "^0.3.3",
     "sleep": "^6.1.0",
